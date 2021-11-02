@@ -5,14 +5,9 @@ import com.api.dev.finance_manager.services.DespesaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import sun.security.krb5.internal.crypto.Des;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-
-import java.awt.geom.RectangularShape;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -40,6 +35,20 @@ public class DespesaController {
         }
         catch (IllegalArgumentException errorIllegalArgument){
             return ResponseEntity.badRequest().body(errorIllegalArgument.getMessage());
+        }
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<?> deleteForId(@PathVariable("id") Long id){
+        try{
+            this.despesaService.deletarById(id);
+            return ResponseEntity.noContent().build();
+        }
+        catch (NoSuchElementException errorNotFound){
+            return ResponseEntity.notFound().build();
+        }
+        catch (IllegalArgumentException illegalArgumentException){
+            return ResponseEntity.badRequest().body(illegalArgumentException.getMessage());
         }
     }
 
