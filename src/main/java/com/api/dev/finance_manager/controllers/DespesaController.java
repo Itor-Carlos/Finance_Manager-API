@@ -32,7 +32,7 @@ public class DespesaController {
     @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> buscarForId(@PathVariable("id") Long id){
         try{
-            Despesa despesaBuscada = this.despesaService.buscar(id);
+            Despesa despesaBuscada = this.despesaService.buscarForId(id);
             return ResponseEntity.ok(despesaBuscada);
         }
         catch (NoSuchElementException errorNotFound){

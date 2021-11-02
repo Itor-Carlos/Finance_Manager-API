@@ -20,7 +20,7 @@ public class DespesaService {
         return this.despesaRepository.findAll();
     }
 
-    public Despesa buscar(Long id) {
+    public Despesa buscarForId(Long id) {
         if(id < 1){
             throw new IllegalArgumentException("the id most be higher or equals 1");
         }
