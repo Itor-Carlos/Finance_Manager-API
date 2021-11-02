@@ -30,7 +30,7 @@ public class DespesaController {
     }
 
     @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> buscar(@PathVariable("id") Long id){
+    public ResponseEntity<?> buscarForId(@PathVariable("id") Long id){
         try{
             Despesa despesaBuscada = this.despesaService.buscar(id);
             return ResponseEntity.ok(despesaBuscada);
