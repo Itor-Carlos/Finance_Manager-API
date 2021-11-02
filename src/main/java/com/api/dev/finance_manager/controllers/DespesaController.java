@@ -29,8 +29,7 @@ public class DespesaController {
         return ResponseEntity.ok(listaDespesas);
     }
 
-    @GetMapping("/{id}")
-    @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> buscar(@PathVariable("id") Long id){
         try{
             Despesa despesaBuscada = this.despesaService.buscar(id);
