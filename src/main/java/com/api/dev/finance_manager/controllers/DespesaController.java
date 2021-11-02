@@ -5,9 +5,12 @@ import com.api.dev.finance_manager.services.DespesaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+
+import javax.print.attribute.standard.Media;
+import java.net.URI;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -46,6 +49,18 @@ public class DespesaController {
         }
         catch (NoSuchElementException errorNotFound){
             return ResponseEntity.notFound().build();
+        }
+        catch (IllegalArgumentException illegalArgumentException){
+            return ResponseEntity.badRequest().body(illegalArgumentException.getMessage());
+        }
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> salvar(@RequestBody Despesa despesa){
+        try{
+            Despesa despesaSalva = this.despesaService.salvar(despesa);
+            URI despesaSalvaLocation = URI.create("/despesas/"+despesaSalva.getId());
+            return ResponseEntity.created(despesaSalvaLocation).build();
         }
         catch (IllegalArgumentException illegalArgumentException){
             return ResponseEntity.badRequest().body(illegalArgumentException.getMessage());
