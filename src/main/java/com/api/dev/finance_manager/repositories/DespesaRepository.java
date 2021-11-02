@@ -1,4 +1,7 @@
 package com.api.dev.finance_manager.repositories;
 
-public interface DespesaRepository {
+import com.api.dev.finance_manager.model.Despesa;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface DespesaRepository extends JpaRepository<Despesa,Long> {
 }
