@@ -67,4 +67,19 @@ public class DespesaController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> alterar(@PathVariable("id") Long id, @RequestBody Despesa despesa){
+        try{
+
+            Despesa despesaAlterada = this.despesaService.alterar(despesa,id);
+            return ResponseEntity.ok(despesaAlterada);
+        }
+        catch (NoSuchElementException elementException){
+            return ResponseEntity.notFound().build();
+        }
+        catch (IllegalArgumentException illegalArgumentException){
+            return ResponseEntity.badRequest().body(illegalArgumentException.getMessage());
+        }
+    }
+
 }
