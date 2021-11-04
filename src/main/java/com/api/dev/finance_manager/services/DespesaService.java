@@ -2,6 +2,7 @@ package com.api.dev.finance_manager.services;
 
 import com.api.dev.finance_manager.model.Despesa;
 import com.api.dev.finance_manager.repositories.DespesaRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +55,26 @@ public class DespesaService {
         }
 
         return this.despesaRepository.save(despesa);
+    }
+
+    public Despesa alterar(Despesa despesa, Long id){
+        Optional<Despesa> despesaBuscada = this.despesaRepository.findById(id);
+        if(!despesaBuscada.isPresent()){
+            throw new NoSuchElementException("No value present in this id");
+        }
+        if(despesa.getDestino() == null){
+            throw new IllegalArgumentException("the destiny cannot be null");
+        }
+        if(despesa.getDestino() == ""){
+            throw new IllegalArgumentException("the destiny cannot be empty");
+        }
+        if(despesa.getData() == null) {
+            throw new IllegalArgumentException("the data cannot be null");
+        }
+
+        BeanUtils.copyProperties(despesa,despesaBuscada.get(),"id");
+        return this.despesaRepository.save(despesaBuscada.get());
+
     }
 
 }
