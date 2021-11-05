@@ -3,10 +3,12 @@ package com.api.dev.finance_manager.controllers;
 import com.api.dev.finance_manager.model.Despesa;
 import com.api.dev.finance_manager.services.DespesaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
+import sun.security.krb5.internal.crypto.Des;
 
 
 import javax.print.attribute.standard.Media;
@@ -76,6 +78,18 @@ public class DespesaController {
         }
         catch (NoSuchElementException elementException){
             return ResponseEntity.notFound().build();
+        }
+        catch (IllegalArgumentException illegalArgumentException){
+            return ResponseEntity.badRequest().body(illegalArgumentException.getMessage());
+        }
+    }
+
+
+    @GetMapping(path = "/pesquisa-destino")
+    public ResponseEntity<?> findByDestinoContaining(@Param("destino") String destino){
+        try{
+            List<Despesa> listaResultados = this.despesaService.findByDestinoContaining(destino);
+            return ResponseEntity.ok(listaResultados);
         }
         catch (IllegalArgumentException illegalArgumentException){
             return ResponseEntity.badRequest().body(illegalArgumentException.getMessage());
