@@ -62,7 +62,7 @@ public class DespesaController {
         try{
             Despesa despesaSalva = this.despesaService.salvar(despesa);
             URI despesaSalvaLocation = URI.create("/despesas/"+despesaSalva.getId());
-            return ResponseEntity.created(despesaSalvaLocation).build();
+            return ResponseEntity.created(despesaSalvaLocation).body(despesaSalva);
         }
         catch (IllegalArgumentException illegalArgumentException){
             return ResponseEntity.badRequest().body(illegalArgumentException.getMessage());
