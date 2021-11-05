@@ -77,4 +77,13 @@ public class DespesaService {
 
     }
 
+    public List<Despesa> findByDestinoContaining(String destino){
+        if(destino == null){
+            throw new IllegalArgumentException("the destiny cannot be null");
+        }
+
+        return this.despesaRepository.findByDestinoContaining(destino);
+
+    }
+
 }
