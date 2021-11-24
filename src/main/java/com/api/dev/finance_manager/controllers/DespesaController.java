@@ -8,11 +8,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import sun.security.krb5.internal.crypto.Des;
 
 
 import javax.print.attribute.standard.Media;
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -81,6 +83,17 @@ public class DespesaController {
         }
         catch (IllegalArgumentException illegalArgumentException){
             return ResponseEntity.badRequest().body(illegalArgumentException.getMessage());
+        }
+    }
+
+    @GetMapping("/find")
+    public ResponseEntity<?> find(@Param("id") Long id, @Param("destino") String destino, @Param("data") Date data){
+        try{
+            List<Despesa> listaResultado = this.despesaService.find(id,destino,data);
+            return ResponseEntity.ok(listaResultado);
+        }
+        catch (IllegalArgumentException errorIllegalArgument){
+            return ResponseEntity.badRequest().body(errorIllegalArgument.getMessage());
         }
     }
 }

@@ -5,8 +5,10 @@ import com.api.dev.finance_manager.repositories.repository.DespesaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.security.krb5.internal.crypto.Des;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -75,5 +77,12 @@ public class DespesaService {
         BeanUtils.copyProperties(despesa,despesaBuscada.get(),"id");
         return this.despesaRepository.save(despesaBuscada.get());
 
+    }
+
+    public List<Despesa> find(Long id, String destino, Date data){
+        if(id != null && id < 1){
+            throw new IllegalArgumentException("the id most be higher or equals 1");
+        }
+        return this.despesaRepository.find(id,destino,data);
     }
 }
