@@ -9,6 +9,5 @@ import java.util.List;
 @Repository
 public interface DespesaRepository extends JpaRepository<Despesa,Long> {
 
-    public List<Despesa> findByDestinoContaining(String destino);
 
 }
