@@ -83,17 +83,4 @@ public class DespesaController {
             return ResponseEntity.badRequest().body(illegalArgumentException.getMessage());
         }
     }
-
-
-    @GetMapping(path = "/pesquisa-destino")
-    public ResponseEntity<?> findByDestinoContaining(@Param("destino") String destino){
-        try{
-            List<Despesa> listaResultados = this.despesaService.findByDestinoContaining(destino);
-            return ResponseEntity.ok(listaResultados);
-        }
-        catch (IllegalArgumentException illegalArgumentException){
-            return ResponseEntity.badRequest().body(illegalArgumentException.getMessage());
-        }
-    }
-
 }
