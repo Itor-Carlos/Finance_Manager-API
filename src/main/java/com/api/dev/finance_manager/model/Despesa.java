@@ -1,5 +1,7 @@
 package com.api.dev.finance_manager.model;
 
+import com.api.dev.finance_manager.enums.DespesaStatus;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,13 +19,18 @@ public class Despesa {
     @Column(nullable = false)
     private Date data;
 
+    @Column(nullable = false,name="status",length = 10)
+    @Enumerated(EnumType.STRING)
+    private DespesaStatus despesaStatus;
+
     public Despesa() {
     }
 
-    public Despesa(Long id, String destino, Date data) {
+    public Despesa(Long id, String destino, Date data, DespesaStatus despesaStatus) {
         this.id = id;
         this.destino = destino;
         this.data = data;
+        this.despesaStatus = despesaStatus;
     }
 
     public Long getId() {
@@ -48,5 +55,13 @@ public class Despesa {
 
     public void setData(Date data) {
         this.data = data;
+    }
+
+    public DespesaStatus getDespesaStatus() {
+        return despesaStatus;
+    }
+
+    public void setDespesaStatus(DespesaStatus despesaStatus) {
+        this.despesaStatus = despesaStatus;
     }
 }

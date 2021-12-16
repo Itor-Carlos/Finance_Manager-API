@@ -1,5 +1,6 @@
 package com.api.dev.finance_manager.services;
 
+import com.api.dev.finance_manager.enums.DespesaStatus;
 import com.api.dev.finance_manager.model.Despesa;
 import com.api.dev.finance_manager.repositories.repository.DespesaRepository;
 import org.springframework.beans.BeanUtils;
@@ -79,10 +80,10 @@ public class DespesaService {
 
     }
 
-    public List<Despesa> find(Long id, String destino, Date data){
+    public List<Despesa> find(Long id, String destino, Date data, DespesaStatus despesaStatus){
         if(id != null && id < 1){
             throw new IllegalArgumentException("the id most be higher or equals 1");
         }
-        return this.despesaRepository.find(id,destino,data);
+        return this.despesaRepository.find(id,destino,data,despesaStatus);
     }
 }

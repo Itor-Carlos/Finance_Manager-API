@@ -1,5 +1,6 @@
 package com.api.dev.finance_manager.controllers;
 
+import com.api.dev.finance_manager.enums.DespesaStatus;
 import com.api.dev.finance_manager.model.Despesa;
 import com.api.dev.finance_manager.services.DespesaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,9 +88,9 @@ public class DespesaController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<?> find(@Param("id") Long id, @Param("destino") String destino, @Param("data") Date data){
+    public ResponseEntity<?> find(@Param("id") Long id, @Param("destino") String destino, @Param("data") Date data, @Param("despesaStatus")DespesaStatus despesaStatus){
         try{
-            List<Despesa> listaResultado = this.despesaService.find(id,destino,data);
+            List<Despesa> listaResultado = this.despesaService.find(id,destino,data,despesaStatus);
             return ResponseEntity.ok(listaResultado);
         }
         catch (IllegalArgumentException errorIllegalArgument){
