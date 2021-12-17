@@ -1,5 +1,6 @@
 package com.api.dev.finance_manager.services;
 
+import com.api.dev.finance_manager.enums.DespesaCategoria;
 import com.api.dev.finance_manager.enums.DespesaStatus;
 import com.api.dev.finance_manager.model.Despesa;
 import com.api.dev.finance_manager.repositories.repository.DespesaRepository;
@@ -80,10 +81,10 @@ public class DespesaService {
 
     }
 
-    public List<Despesa> find(Long id, String destino, Date data, DespesaStatus despesaStatus){
+    public List<Despesa> find(Long id, String destino, Date data, DespesaStatus despesaStatus, DespesaCategoria despesaCategoria){
         if(id != null && id < 1){
             throw new IllegalArgumentException("the id most be higher or equals 1");
         }
-        return this.despesaRepository.find(id,destino,data,despesaStatus);
+        return this.despesaRepository.find(id,destino,data,despesaStatus,despesaCategoria);
     }
 }
