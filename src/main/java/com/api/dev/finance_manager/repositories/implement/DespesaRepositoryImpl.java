@@ -1,5 +1,6 @@
 package com.api.dev.finance_manager.repositories.implement;
 
+import com.api.dev.finance_manager.enums.DespesaCategoria;
 import com.api.dev.finance_manager.enums.DespesaStatus;
 import com.api.dev.finance_manager.model.Despesa;
 import org.springframework.stereotype.Repository;
@@ -18,7 +19,7 @@ public class DespesaRepositoryImpl {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<Despesa> find(Long id, String destino, Date data, DespesaStatus despesaStatus){
+    public List<Despesa> find(Long id, String destino, Date data, DespesaStatus despesaStatus, DespesaCategoria despesaCategoria){
         StringBuilder jpql = new StringBuilder();
         jpql.append("from Despesa WHERE 0 = 0 ");
         Map<String,Object> mapaParametros = new HashMap<>();
@@ -43,6 +44,22 @@ public class DespesaRepositoryImpl {
             }
             if(despesaStatus == DespesaStatus.PENDENTE){
                 mapaParametros.put(("despesaStatus"),DespesaStatus.PENDENTE);
+            }
+        }
+
+        if(despesaCategoria != null){
+            jpql.append(" and despesaCategoria LIKE :categoria");
+            if(despesaCategoria == DespesaCategoria.COMIDA){
+                mapaParametros.put("categoria",DespesaCategoria.COMIDA);
+            }
+            if(despesaCategoria == DespesaCategoria.LAZER){
+                mapaParametros.put("categoria",DespesaCategoria.LAZER);
+            }
+            if(despesaCategoria == DespesaCategoria.EDUCACAO){
+                mapaParametros.put("categoria",DespesaCategoria.EDUCACAO);
+            }
+            if(despesaCategoria == DespesaCategoria.SAUDE){
+                mapaParametros.put("categoria",DespesaCategoria.SAUDE);
             }
         }
 
