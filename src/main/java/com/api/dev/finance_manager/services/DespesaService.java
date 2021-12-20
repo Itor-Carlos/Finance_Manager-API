@@ -4,11 +4,8 @@ import com.api.dev.finance_manager.enums.DespesaCategoria;
 import com.api.dev.finance_manager.enums.DespesaStatus;
 import com.api.dev.finance_manager.model.Despesa;
 import com.api.dev.finance_manager.repositories.repository.DespesaRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.security.krb5.internal.crypto.Des;
-
 
 import java.util.Date;
 import java.util.List;
@@ -61,24 +58,14 @@ public class DespesaService {
         return this.despesaRepository.save(despesa);
     }
 
-    public Despesa alterar(Despesa despesa, Long id){
+    public void alterar(Despesa despesa, Long id){
         Optional<Despesa> despesaBuscada = this.despesaRepository.findById(id);
-        if(!despesaBuscada.isPresent()){
-            throw new NoSuchElementException("No value present in this id");
+        if(despesaBuscada.isPresent()){
+            this.despesaRepository.updateDespesa(id,despesa);
         }
-        if(despesa.getDestino() == null){
-            throw new IllegalArgumentException("the destiny cannot be null");
+        else{
+            throw new NoSuchElementException();
         }
-        if(despesa.getDestino() == ""){
-            throw new IllegalArgumentException("the destiny cannot be empty");
-        }
-        if(despesa.getData() == null) {
-            throw new IllegalArgumentException("the data cannot be null");
-        }
-
-        BeanUtils.copyProperties(despesa,despesaBuscada.get(),"id");
-        return this.despesaRepository.save(despesaBuscada.get());
-
     }
 
     public List<Despesa> find(Long id, String destino, Date data, DespesaStatus despesaStatus, DespesaCategoria despesaCategoria){

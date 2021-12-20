@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.Date;
 import java.util.HashMap;
@@ -69,4 +70,41 @@ public class DespesaRepositoryImpl {
         return query.getResultList();
     }
 
+    public void updateDespesa(Long id, Despesa despesa){
+        StringBuilder jpql = new StringBuilder();
+
+        Map<String,Object> parametros = new HashMap<>();
+
+        jpql.append("UPDATE Despesa SET id = :id");
+        if(despesa.getDestino() != null){
+            jpql.append(", destino = :destino");
+            parametros.put("destino", despesa.getDestino());
+        }
+        if(despesa.getData() != null){
+            jpql.append(", data = :data");
+            parametros.put("data",despesa.getData());
+        }
+        if(despesa.getDespesaStatus() != null){
+            jpql.append(", despesaStatus = :status");
+            switch (despesa.getDespesaStatus()){
+                case PENDENTE: parametros.put("status",DespesaStatus.PENDENTE);
+                case PAGA: parametros.put("status",DespesaStatus.PAGA);
+            }
+        }
+        if(despesa.getDespesaCategoria() != null){
+            jpql.append(", despesaCategoria = :categoria");
+            switch (despesa.getDespesaCategoria()){
+                case LAZER: parametros.put("categoria",DespesaCategoria.LAZER);break;
+                case SAUDE: parametros.put("categoria",DespesaCategoria.SAUDE);break;
+                case COMIDA:parametros.put("categoria",DespesaCategoria.COMIDA);break;
+                case EDUCACAO: parametros.put("categoria",DespesaCategoria.EDUCACAO);break;
+            }
+        }
+        jpql.append(" WHERE id = :id");
+        parametros.put("id",id);
+
+        Query queryUpdate = this.entityManager.createQuery(jpql.toString());
+        parametros.forEach((key,value) -> queryUpdate.setParameter(key,value));
+        queryUpdate.executeUpdate();
+    }
 }

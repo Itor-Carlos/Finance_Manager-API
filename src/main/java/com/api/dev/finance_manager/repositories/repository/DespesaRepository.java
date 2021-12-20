@@ -6,6 +6,7 @@ import com.api.dev.finance_manager.model.Despesa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface DespesaRepository extends JpaRepository<Despesa,Long> {
 
     public List<Despesa> find(Long id, String destino, Date data, DespesaStatus despesaStatus, DespesaCategoria despesaCategoria);
 
+    @Transactional
+    public void updateDespesa(Long id, Despesa despesa);
 }
