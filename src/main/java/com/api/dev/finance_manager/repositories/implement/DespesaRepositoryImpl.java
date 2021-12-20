@@ -87,8 +87,8 @@ public class DespesaRepositoryImpl {
         if(despesa.getDespesaStatus() != null){
             jpql.append(", despesaStatus = :status");
             switch (despesa.getDespesaStatus()){
-                case PENDENTE: parametros.put("status",DespesaStatus.PENDENTE);
-                case PAGA: parametros.put("status",DespesaStatus.PAGA);
+                case PENDENTE: parametros.put("status",DespesaStatus.PENDENTE);break;
+                case PAGA: parametros.put("status",DespesaStatus.PAGA);break;
             }
         }
         if(despesa.getDespesaCategoria() != null){
