@@ -40,27 +40,18 @@ public class DespesaRepositoryImpl {
 
         if(despesaStatus != null){
             jpql.append("and despesaStatus LIKE :despesaStatus");
-            if(despesaStatus == DespesaStatus.PAGA){
-                mapaParametros.put("despesaStatus",DespesaStatus.PAGA);
-            }
-            if(despesaStatus == DespesaStatus.PENDENTE){
-                mapaParametros.put(("despesaStatus"),DespesaStatus.PENDENTE);
+            switch (despesaStatus){
+                case PAGA: mapaParametros.put("despesaStatus",DespesaStatus.PAGA);break;
+                case PENDENTE: mapaParametros.put("despesaStatus",DespesaStatus.PENDENTE);break;
             }
         }
-
         if(despesaCategoria != null){
             jpql.append(" and despesaCategoria LIKE :categoria");
-            if(despesaCategoria == DespesaCategoria.COMIDA){
-                mapaParametros.put("categoria",DespesaCategoria.COMIDA);
-            }
-            if(despesaCategoria == DespesaCategoria.LAZER){
-                mapaParametros.put("categoria",DespesaCategoria.LAZER);
-            }
-            if(despesaCategoria == DespesaCategoria.EDUCACAO){
-                mapaParametros.put("categoria",DespesaCategoria.EDUCACAO);
-            }
-            if(despesaCategoria == DespesaCategoria.SAUDE){
-                mapaParametros.put("categoria",DespesaCategoria.SAUDE);
+            switch (despesaCategoria){
+                case EDUCACAO: mapaParametros.put("categoria",DespesaCategoria.EDUCACAO);break;
+                case COMIDA: mapaParametros.put("categoria",DespesaCategoria.COMIDA);break;
+                case SAUDE: mapaParametros.put("categoria",DespesaCategoria.SAUDE);break;
+                case LAZER: mapaParametros.put("categoria",DespesaCategoria.LAZER);break;
             }
         }
 
