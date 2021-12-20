@@ -8,13 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
+
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import sun.security.krb5.internal.crypto.Des;
 
 
-import javax.print.attribute.standard.Media;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
@@ -76,9 +73,8 @@ public class DespesaController {
     @PutMapping("/{id}")
     public ResponseEntity<?> alterar(@PathVariable("id") Long id, @RequestBody Despesa despesa){
         try{
-
-            Despesa despesaAlterada = this.despesaService.alterar(despesa,id);
-            return ResponseEntity.ok(despesaAlterada);
+            this.despesaService.alterar(despesa,id);
+            return ResponseEntity.ok().build();
         }
         catch (NoSuchElementException elementException){
             return ResponseEntity.notFound().build();
