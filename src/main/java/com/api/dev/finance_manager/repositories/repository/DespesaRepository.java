@@ -17,4 +17,7 @@ public interface DespesaRepository extends JpaRepository<Despesa,Long> {
 
     @Transactional
     public void updateDespesa(Long id, Despesa despesa);
+
+    @Transactional
+    public void deleteById(Long id);
 }
