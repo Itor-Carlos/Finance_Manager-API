@@ -98,4 +98,11 @@ public class DespesaRepositoryImpl {
         parametros.forEach((key,value) -> queryUpdate.setParameter(key,value));
         queryUpdate.executeUpdate();
     }
+
+    public void deleteById(Long id){
+        Query queryDelete = this.entityManager.createQuery("DELETE FROM Despesa WHERE id = :id");
+        queryDelete.setParameter("id",id);
+        queryDelete.executeUpdate();
+    }
+
 }
