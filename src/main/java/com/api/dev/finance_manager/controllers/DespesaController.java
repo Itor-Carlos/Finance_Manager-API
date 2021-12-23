@@ -85,7 +85,7 @@ public class DespesaController {
     }
 
     @GetMapping(path = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> find(@Param("id") Long id, @Param("destino") String destino, @Param("data") Date data, @Param("despesaStatus")DespesaStatus despesaStatus, @Param("despesaCategoria")DespesaCategoria despesaCategoria){
+    public ResponseEntity<?> find(@RequestParam(name = "id", required = false) Long id, @RequestParam(name = "destino",required = false) String destino, @RequestParam(name = "data", required = false) Date data, @RequestParam(name = "despesaStatus",required = false)DespesaStatus despesaStatus, @RequestParam(name = "despesaCategoria",required = false)DespesaCategoria despesaCategoria){
         try{
             List<Despesa> listaResultado = this.despesaService.find(id,destino,data,despesaStatus,despesaCategoria);
             return ResponseEntity.ok(listaResultado);
