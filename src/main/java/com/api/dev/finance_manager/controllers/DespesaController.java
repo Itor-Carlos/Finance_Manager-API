@@ -24,7 +24,7 @@ public class DespesaController {
     @Autowired
     private DespesaService despesaService;
 
-    @GetMapping
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Despesa>> listar(){
         List<Despesa> listaDespesas = this.despesaService.listar();
         return ResponseEntity.ok(listaDespesas);
@@ -70,7 +70,7 @@ public class DespesaController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> alterar(@PathVariable("id") Long id, @RequestBody Despesa despesa){
         try{
             this.despesaService.alterar(despesa,id);
@@ -84,7 +84,7 @@ public class DespesaController {
         }
     }
 
-    @GetMapping("/find")
+    @GetMapping(path = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> find(@Param("id") Long id, @Param("destino") String destino, @Param("data") Date data, @Param("despesaStatus")DespesaStatus despesaStatus, @Param("despesaCategoria")DespesaCategoria despesaCategoria){
         try{
             List<Despesa> listaResultado = this.despesaService.find(id,destino,data,despesaStatus,despesaCategoria);
