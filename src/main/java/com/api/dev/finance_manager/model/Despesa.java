@@ -32,6 +32,13 @@ public class Despesa {
     public Despesa() {
     }
 
+    public Despesa(String destino, Date data, DespesaStatus despesaStatus, DespesaCategoria despesaCategoria) {
+        this.destino = destino;
+        this.data = data;
+        this.despesaStatus = despesaStatus;
+        this.despesaCategoria = despesaCategoria;
+    }
+
     public Despesa(Long id, String destino, Date data, DespesaStatus despesaStatus, DespesaCategoria despesaCategoria) {
         this.id = id;
         this.destino = destino;
