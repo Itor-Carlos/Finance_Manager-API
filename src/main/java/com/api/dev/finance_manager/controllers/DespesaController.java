@@ -72,9 +72,9 @@ public class DespesaController {
     }
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> alterar(@PathVariable("id") Long id, @RequestBody Despesa despesa){
+    public ResponseEntity<?> alterar(@PathVariable("id") Long id, @RequestBody DespesaDTO despesaDTO){
         try{
-            this.despesaService.alterar(despesa,id);
+            this.despesaService.alterar(despesaDTO.toDespesa(),id);
             return ResponseEntity.ok().build();
         }
         catch (NoSuchElementException elementException){
