@@ -1,5 +1,6 @@
 package com.api.dev.finance_manager.controllers;
 
+import com.api.dev.finance_manager.dto.DespesaDTO;
 import com.api.dev.finance_manager.enums.DespesaCategoria;
 import com.api.dev.finance_manager.enums.DespesaStatus;
 import com.api.dev.finance_manager.model.Despesa;
@@ -59,9 +60,9 @@ public class DespesaController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> salvar(@RequestBody Despesa despesa){
+    public ResponseEntity<?> salvar(@RequestBody DespesaDTO despesaDTO){
         try{
-            Despesa despesaSalva = this.despesaService.salvar(despesa);
+            Despesa despesaSalva = this.despesaService.salvar(despesaDTO.toDespesa());
             URI despesaSalvaLocation = URI.create("/despesas/"+despesaSalva.getId());
             return ResponseEntity.created(despesaSalvaLocation).body(despesaSalva);
         }
