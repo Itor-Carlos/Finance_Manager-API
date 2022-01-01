@@ -1,58 +1,26 @@
-package com.api.dev.finance_manager.model;
+package com.api.dev.finance_manager.dto;
 
 import com.api.dev.finance_manager.enums.DespesaCategoria;
 import com.api.dev.finance_manager.enums.DespesaStatus;
+import com.api.dev.finance_manager.model.Despesa;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "despesa")
-public class Despesa {
+public class DespesaDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column(length = 50, nullable = false)
     private String destino;
-
-    @Column(nullable = false)
     private Date data;
-
-    @Column(nullable = false,name="status",length = 10)
-    @Enumerated(EnumType.STRING)
     private DespesaStatus despesaStatus;
-
-    @Column(nullable = false,name = "categoria",length = 10)
-    @Enumerated(EnumType.STRING)
     private DespesaCategoria despesaCategoria;
 
-
-    public Despesa() {
+    public DespesaDTO() {
     }
 
-    public Despesa(String destino, Date data, DespesaStatus despesaStatus, DespesaCategoria despesaCategoria) {
+    public DespesaDTO(String destino, Date data, DespesaStatus despesaStatus, DespesaCategoria despesaCategoria) {
         this.destino = destino;
         this.data = data;
         this.despesaStatus = despesaStatus;
         this.despesaCategoria = despesaCategoria;
-    }
-
-    public Despesa(Long id, String destino, Date data, DespesaStatus despesaStatus, DespesaCategoria despesaCategoria) {
-        this.id = id;
-        this.destino = destino;
-        this.data = data;
-        this.despesaStatus = despesaStatus;
-        this.despesaCategoria = despesaCategoria;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getDestino() {
@@ -85,5 +53,9 @@ public class Despesa {
 
     public void setDespesaCategoria(DespesaCategoria despesaCategoria) {
         this.despesaCategoria = despesaCategoria;
+    }
+
+    public Despesa toDespesa(){
+        return new Despesa(this.getDestino(),this.getData(),this.getDespesaStatus(),this.getDespesaCategoria());
     }
 }
