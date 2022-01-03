@@ -26,21 +26,14 @@ public class DespesaService {
         if(id < 1){
             throw new IllegalArgumentException("the id most be higher or equals 1");
         }
-        Optional<Despesa> todo = this.despesaRepository.findById(id);
-        if(!todo.isPresent()){
-            throw new NoSuchElementException("No value present in this id");
-        }
-        return todo.get();
+        return this.despesaRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
     }
 
     public void deletarById(Long id){
         if(id < 1){
             throw new IllegalArgumentException("the id most be higher or equals 1");
         }
-        Optional<Despesa> todo = this.despesaRepository.findById(id);
-        if(!todo.isPresent()){
-            throw new NoSuchElementException("No value present in this id");
-        }
+        Despesa despesa = this.despesaRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
         this.despesaRepository.deleteById(id);
     }
 
