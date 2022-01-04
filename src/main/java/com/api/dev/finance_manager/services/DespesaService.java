@@ -58,7 +58,7 @@ public class DespesaService {
             this.despesaRepository.updateDespesa(id,despesa);
         }
         else{
-            throw new NoSuchElementException();
+            throw new DespesaNotFoundException();
         }
     }
 
