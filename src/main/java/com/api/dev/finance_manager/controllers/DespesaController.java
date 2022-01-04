@@ -3,6 +3,7 @@ package com.api.dev.finance_manager.controllers;
 import com.api.dev.finance_manager.dto.DespesaDTO;
 import com.api.dev.finance_manager.enums.DespesaCategoria;
 import com.api.dev.finance_manager.enums.DespesaStatus;
+import com.api.dev.finance_manager.exceptions.DespesaNotFoundException;
 import com.api.dev.finance_manager.model.Despesa;
 import com.api.dev.finance_manager.services.DespesaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class DespesaController {
             Despesa despesaBuscada = this.despesaService.buscarForId(id);
             return ResponseEntity.ok(despesaBuscada);
         }
-        catch (NoSuchElementException errorNotFound){
+        catch (DespesaNotFoundException errorNotFound){
             return ResponseEntity.notFound().build();
         }
         catch (IllegalArgumentException errorIllegalArgument){
