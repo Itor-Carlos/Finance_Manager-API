@@ -2,6 +2,7 @@ package com.api.dev.finance_manager.services;
 
 import com.api.dev.finance_manager.enums.DespesaCategoria;
 import com.api.dev.finance_manager.enums.DespesaStatus;
+import com.api.dev.finance_manager.exceptions.DespesaNotFoundException;
 import com.api.dev.finance_manager.model.Despesa;
 import com.api.dev.finance_manager.repositories.repository.DespesaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +27,14 @@ public class DespesaService {
         if(id < 1){
             throw new IllegalArgumentException("the id most be higher or equals 1");
         }
-        return this.despesaRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        return this.despesaRepository.findById(id).orElseThrow(() -> new DespesaNotFoundException());
     }
 
     public void deletarById(Long id){
         if(id < 1){
             throw new IllegalArgumentException("the id most be higher or equals 1");
         }
-        Despesa despesa = this.despesaRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        Despesa despesa = this.despesaRepository.findById(id).orElseThrow(() -> new DespesaNotFoundException());
         this.despesaRepository.deleteById(id);
     }
 
@@ -57,7 +58,7 @@ public class DespesaService {
             this.despesaRepository.updateDespesa(id,despesa);
         }
         else{
-            throw new NoSuchElementException();
+            throw new DespesaNotFoundException();
         }
     }
 
