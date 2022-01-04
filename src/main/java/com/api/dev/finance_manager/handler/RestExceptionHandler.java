@@ -12,4 +12,14 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class RestExceptionHandler {
 
+    @ExceptionHandler(DespesaNotFoundException.class)
+    public ResponseEntity<DespesaNotFoundExceptionDetails> despesaNotFoundException(DespesaNotFoundException despesaNotFoundException){
+        DespesaNotFoundExceptionDetails despesaNotFoundDetails = new DespesaNotFoundExceptionDetails(
+                "Despesa not find in this id",
+                HttpStatus.NOT_FOUND.value(),
+                LocalDateTime.now(),
+                "Despesa Not Found"
+        );
+        return new ResponseEntity<>(despesaNotFoundDetails,HttpStatus.NOT_FOUND);
+    }
 }
