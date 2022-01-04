@@ -78,7 +78,7 @@ public class DespesaController {
             this.despesaService.alterar(despesaDTO.toDespesa(),id);
             return ResponseEntity.ok().build();
         }
-        catch (NoSuchElementException elementException){
+        catch (DespesaNotFoundException elementException){
             return ResponseEntity.notFound().build();
         }
         catch (IllegalArgumentException illegalArgumentException){
