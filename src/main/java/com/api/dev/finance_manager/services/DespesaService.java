@@ -34,7 +34,7 @@ public class DespesaService {
         if(id < 1){
             throw new IllegalArgumentException("the id most be higher or equals 1");
         }
-        Despesa despesa = this.despesaRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        Despesa despesa = this.despesaRepository.findById(id).orElseThrow(() -> new DespesaNotFoundException());
         this.despesaRepository.deleteById(id);
     }
 
