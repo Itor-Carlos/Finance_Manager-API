@@ -34,66 +34,32 @@ public class DespesaController {
 
     @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> buscarForId(@PathVariable("id") Long id){
-        try{
-            Despesa despesaBuscada = this.despesaService.buscarForId(id);
-            return ResponseEntity.ok(despesaBuscada);
-        }
-        catch (DespesaNotFoundException errorNotFound){
-            return ResponseEntity.notFound().build();
-        }
-        catch (IllegalArgumentException errorIllegalArgument){
-            return ResponseEntity.badRequest().body(errorIllegalArgument.getMessage());
-        }
+        Despesa despesaBuscada = this.despesaService.buscarForId(id);
+        return ResponseEntity.ok(despesaBuscada);
     }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> deleteForId(@PathVariable("id") Long id){
-        try{
-            this.despesaService.deletarById(id);
-            return ResponseEntity.noContent().build();
-        }
-        catch (DespesaNotFoundException errorNotFound){
-            return ResponseEntity.notFound().build();
-        }
-        catch (IllegalArgumentException illegalArgumentException){
-            return ResponseEntity.badRequest().body(illegalArgumentException.getMessage());
-        }
+        this.despesaService.deletarById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> salvar(@RequestBody DespesaDTO despesaDTO){
-        try{
-            Despesa despesaSalva = this.despesaService.salvar(despesaDTO.toDespesa());
-            URI despesaSalvaLocation = URI.create("/despesas/"+despesaSalva.getId());
-            return ResponseEntity.created(despesaSalvaLocation).body(despesaSalva);
-        }
-        catch (IllegalArgumentException illegalArgumentException){
-            return ResponseEntity.badRequest().body(illegalArgumentException.getMessage());
-        }
+        Despesa despesaSalva = this.despesaService.salvar(despesaDTO.toDespesa());
+        URI despesaSalvaLocation = URI.create("/despesas/"+despesaSalva.getId());
+        return ResponseEntity.created(despesaSalvaLocation).body(despesaSalva);
     }
 
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> alterar(@PathVariable("id") Long id, @RequestBody DespesaDTO despesaDTO){
-        try{
-            this.despesaService.alterar(despesaDTO.toDespesa(),id);
-            return ResponseEntity.ok().build();
-        }
-        catch (DespesaNotFoundException elementException){
-            return ResponseEntity.notFound().build();
-        }
-        catch (IllegalArgumentException illegalArgumentException){
-            return ResponseEntity.badRequest().body(illegalArgumentException.getMessage());
-        }
+        this.despesaService.alterar(despesaDTO.toDespesa(),id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(path = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> find(@RequestParam(name = "id", required = false) Long id, @RequestParam(name = "destino",required = false) String destino, @RequestParam(name = "data", required = false) Date data, @RequestParam(name = "despesaStatus",required = false)DespesaStatus despesaStatus, @RequestParam(name = "despesaCategoria",required = false)DespesaCategoria despesaCategoria){
-        try{
-            List<Despesa> listaResultado = this.despesaService.find(id,destino,data,despesaStatus,despesaCategoria);
-            return ResponseEntity.ok(listaResultado);
-        }
-        catch (IllegalArgumentException errorIllegalArgument){
-            return ResponseEntity.badRequest().body(errorIllegalArgument.getMessage());
-        }
+        List<Despesa> listaResultado = this.despesaService.find(id,destino,data,despesaStatus,despesaCategoria);
+        return ResponseEntity.ok(listaResultado);
     }
 }
