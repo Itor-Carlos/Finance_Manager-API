@@ -52,7 +52,7 @@ public class DespesaController {
             this.despesaService.deletarById(id);
             return ResponseEntity.noContent().build();
         }
-        catch (NoSuchElementException errorNotFound){
+        catch (DespesaNotFoundException errorNotFound){
             return ResponseEntity.notFound().build();
         }
         catch (IllegalArgumentException illegalArgumentException){
