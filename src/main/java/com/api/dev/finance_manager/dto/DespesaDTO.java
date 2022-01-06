@@ -4,13 +4,19 @@ import com.api.dev.finance_manager.enums.DespesaCategoria;
 import com.api.dev.finance_manager.enums.DespesaStatus;
 import com.api.dev.finance_manager.model.Despesa;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class DespesaDTO {
 
+    @NotBlank(message = "The destino cannot be null")
     private String destino;
+    @NotNull(message = "The date cannot be null")
     private Date data;
+    @NotNull(message = "The despesaStatus cannot be null")
     private DespesaStatus despesaStatus;
+    @NotNull(message = "The despesaCategoria cannot be null")
     private DespesaCategoria despesaCategoria;
 
     public DespesaDTO() {
