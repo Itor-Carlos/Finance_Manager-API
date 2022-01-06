@@ -39,16 +39,6 @@ public class DespesaService {
     }
 
     public Despesa salvar(Despesa despesa){
-        if(despesa.getDestino() == null){
-            throw new IllegalArgumentException("the destiny cannot be null");
-        }
-        if(despesa.getDestino() == ""){
-            throw new IllegalArgumentException("the destiny cannot be empty");
-        }
-        if(despesa.getData() == null) {
-            throw new IllegalArgumentException("the data cannot be null");
-        }
-
         return this.despesaRepository.save(despesa);
     }
 
