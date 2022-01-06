@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
@@ -45,7 +46,7 @@ public class DespesaController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> salvar(@RequestBody DespesaDTO despesaDTO){
+    public ResponseEntity<?> salvar(@RequestBody @Valid DespesaDTO despesaDTO){
         Despesa despesaSalva = this.despesaService.salvar(despesaDTO.toDespesa());
         URI despesaSalvaLocation = URI.create("/despesas/"+despesaSalva.getId());
         return ResponseEntity.created(despesaSalvaLocation).body(despesaSalva);
