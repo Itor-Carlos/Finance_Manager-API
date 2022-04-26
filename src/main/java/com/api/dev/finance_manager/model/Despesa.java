@@ -2,6 +2,8 @@ package com.api.dev.finance_manager.model;
 
 import com.api.dev.finance_manager.enums.DespesaCategoria;
 import com.api.dev.finance_manager.enums.DespesaStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,6 +14,7 @@ public class Despesa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonIgnore
     private Long id;
 
     @Column(length = 50, nullable = false)
@@ -22,10 +25,12 @@ public class Despesa {
 
     @Column(nullable = false,name="status",length = 10)
     @Enumerated(EnumType.STRING)
+    @JsonProperty(value = "status")
     private DespesaStatus despesaStatus;
 
     @Column(nullable = false,name = "categoria",length = 10)
     @Enumerated(EnumType.STRING)
+    @JsonProperty(value = "categoria")
     private DespesaCategoria despesaCategoria;
 
 
