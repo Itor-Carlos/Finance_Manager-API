@@ -32,10 +32,10 @@ public class RestExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<IllegalArgumentExceptionDetails> illegalArgumentException(IllegalArgumentException illegalArgumentException){
         IllegalArgumentExceptionDetails illegalArgumentExceptionDetails = new IllegalArgumentExceptionDetails(
-                illegalArgumentException.getMessage(),
                 HttpStatus.BAD_REQUEST.value(),
                 LocalDateTime.now(),
-                "Illegal Argument"
+                "Illegal Argument",
+                illegalArgumentException.getMessage()
         );
         return new ResponseEntity<>(illegalArgumentExceptionDetails,HttpStatus.BAD_REQUEST);
     }
