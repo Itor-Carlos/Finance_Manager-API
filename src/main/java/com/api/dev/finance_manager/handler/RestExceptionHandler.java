@@ -4,7 +4,6 @@ import com.api.dev.finance_manager.exceptions.DespesaFieldNotValidExceptionDetai
 import com.api.dev.finance_manager.exceptions.DespesaNotFoundException;
 import com.api.dev.finance_manager.exceptions.DespesaNotFoundExceptionDetails;
 import com.api.dev.finance_manager.exceptions.IllegalArgumentExceptionDetails;
-import com.api.dev.finance_manager.exceptions.MethodArgumentNotValidExceptionDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
