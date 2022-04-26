@@ -7,7 +7,19 @@ import java.time.LocalDateTime;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class IllegalArgumentExceptionDetails extends ExceptionDetails{
-    public IllegalArgumentExceptionDetails(String message, int httpStatus, LocalDateTime timeStamp, String exception) {
-        super(message, httpStatus, timeStamp, exception);
+
+    private String message;
+
+    public IllegalArgumentExceptionDetails(int httpStatus, LocalDateTime timeStamp, String exception,String message) {
+        super(httpStatus, timeStamp, exception);
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

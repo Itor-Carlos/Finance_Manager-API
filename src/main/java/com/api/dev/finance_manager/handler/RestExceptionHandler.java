@@ -1,5 +1,6 @@
 package com.api.dev.finance_manager.handler;
 
+import com.api.dev.finance_manager.exceptions.DespesaFieldNotValidExceptionDetails;
 import com.api.dev.finance_manager.exceptions.DespesaNotFoundException;
 import com.api.dev.finance_manager.exceptions.DespesaNotFoundExceptionDetails;
 import com.api.dev.finance_manager.exceptions.IllegalArgumentExceptionDetails;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
@@ -21,10 +24,10 @@ public class RestExceptionHandler {
     @ExceptionHandler(DespesaNotFoundException.class)
     public ResponseEntity<DespesaNotFoundExceptionDetails> despesaNotFoundException(DespesaNotFoundException despesaNotFoundException){
         DespesaNotFoundExceptionDetails despesaNotFoundDetails = new DespesaNotFoundExceptionDetails(
-                "Despesa not find in this id",
                 HttpStatus.NOT_FOUND.value(),
                 LocalDateTime.now(),
-                "Despesa Not Found"
+                "Despesa Not Found",
+                "Despesa not find in this id"
         );
         return new ResponseEntity<>(despesaNotFoundDetails,HttpStatus.NOT_FOUND);
     }
@@ -32,29 +35,30 @@ public class RestExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<IllegalArgumentExceptionDetails> illegalArgumentException(IllegalArgumentException illegalArgumentException){
         IllegalArgumentExceptionDetails illegalArgumentExceptionDetails = new IllegalArgumentExceptionDetails(
-                illegalArgumentException.getMessage(),
                 HttpStatus.BAD_REQUEST.value(),
                 LocalDateTime.now(),
-                "Illegal Argument"
+                "Illegal Argument",
+                illegalArgumentException.getMessage()
         );
         return new ResponseEntity<>(illegalArgumentExceptionDetails,HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<MethodArgumentNotValidExceptionDetails> methodArgumentNotValidException(MethodArgumentNotValidException methodArgumentNotValidException){
+    public ResponseEntity<DespesaFieldNotValidExceptionDetails> despesaFieldNotValidException(MethodArgumentNotValidException methodArgumentNotValidException){
 
         List<FieldError> fieldErrorList = methodArgumentNotValidException.getBindingResult().getFieldErrors();
-        String fieldMessage = fieldErrorList.stream().map(FieldError::getDefaultMessage).collect(Collectors.joining());
-        String fieldError = fieldErrorList.stream().map(FieldError::getField).collect(Collectors.joining());
+        List<String> fieldMessage = fieldErrorList.stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());//get the message of this errors
+        List<String> fieldError = fieldErrorList.stream().map(FieldError::getField).collect(Collectors.toList());;//get the name of field of this erros
 
-        MethodArgumentNotValidExceptionDetails methodArgumentException = new MethodArgumentNotValidExceptionDetails(
-                fieldMessage,
-                HttpStatus.BAD_REQUEST.value(),
-                LocalDateTime.now(),
-                "Method Argument Not Valid Exception",
-                fieldError
-        );
-        return new ResponseEntity<>(methodArgumentException,HttpStatus.BAD_REQUEST);
+        Map<String,String> messageErrors = new HashMap<>();
+
+        for(int i = 0; i<fieldErrorList.size();i++){
+            messageErrors.put(fieldError.get(i), fieldMessage.get(i));
+        }
+
+        DespesaFieldNotValidExceptionDetails despesaFieldNotValidExceptionDetails = new DespesaFieldNotValidExceptionDetails(HttpStatus.BAD_REQUEST.value(), LocalDateTime.now(), "DespesaFieldNotValidExceptionDetails", messageErrors);
+        
+        return new ResponseEntity<>(despesaFieldNotValidExceptionDetails,HttpStatus.BAD_REQUEST);
     }
 
 }
