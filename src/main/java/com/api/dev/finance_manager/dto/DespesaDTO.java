@@ -3,6 +3,7 @@ package com.api.dev.finance_manager.dto;
 import com.api.dev.finance_manager.enums.DespesaCategoria;
 import com.api.dev.finance_manager.enums.DespesaStatus;
 import com.api.dev.finance_manager.model.Despesa;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,7 +16,9 @@ public class DespesaDTO {
     @NotNull(message = "The date cannot be null")
     private Date data;
     @NotNull(message = "The despesaStatus cannot be null")
+    @JsonProperty(value = "status")
     private DespesaStatus despesaStatus;
+    @JsonProperty(value = "categoria")
     @NotNull(message = "The despesaCategoria cannot be null")
     private DespesaCategoria despesaCategoria;
 
