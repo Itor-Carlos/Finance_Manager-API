@@ -3,6 +3,10 @@ package com.api.dev.finance_manager.repositories.implement;
 import com.api.dev.finance_manager.enums.DespesaCategoria;
 import com.api.dev.finance_manager.enums.DespesaStatus;
 import com.api.dev.finance_manager.model.Despesa;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -20,7 +24,7 @@ public class DespesaRepositoryImpl {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<Despesa> find(Long id, String destino, Date data, DespesaStatus despesaStatus, DespesaCategoria despesaCategoria){
+    public Page<Despesa> find(Long id, String destino, Date data, DespesaStatus despesaStatus, DespesaCategoria despesaCategoria, Pageable pageable){
         StringBuilder jpql = new StringBuilder();
         jpql.append("from Despesa WHERE 0 = 0 ");
         Map<String,Object> mapaParametros = new HashMap<>();
@@ -58,7 +62,8 @@ public class DespesaRepositoryImpl {
         TypedQuery<Despesa> query = entityManager.createQuery(jpql.toString(),Despesa.class);
 
         mapaParametros.forEach((chave,valor) -> query.setParameter(chave,valor));
-        return query.getResultList();
+        List<Despesa> listaResultado = query.getResultList();
+        return new PageImpl<>(listaResultado, pageable, listaResultado.size());
     }
 
     public void updateDespesa(Long id, Despesa despesa){
