@@ -6,6 +6,8 @@ import com.api.dev.finance_manager.exceptions.DespesaNotFoundException;
 import com.api.dev.finance_manager.model.Despesa;
 import com.api.dev.finance_manager.repositories.repository.DespesaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -52,10 +54,11 @@ public class DespesaService {
         }
     }
 
-    public List<Despesa> find(Long id, String destino, Date data, DespesaStatus despesaStatus, DespesaCategoria despesaCategoria){
+    public Page<Despesa> find(Long id, String destino, Date data, DespesaStatus despesaStatus, DespesaCategoria despesaCategoria, Pageable pageable){
         if(id != null && id < 1){
             throw new IllegalArgumentException("the id most be higher or equals 1");
         }
-        return this.despesaRepository.find(id,destino,data,despesaStatus,despesaCategoria);
+        return this.despesaRepository.find(id, destino, data, despesaStatus, despesaCategoria, pageable);
+
     }
 }
