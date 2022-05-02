@@ -4,13 +4,17 @@ import com.api.dev.finance_manager.enums.DespesaCategoria;
 import com.api.dev.finance_manager.enums.DespesaStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "despesa")
-public class Despesa {
+@JsonPropertyOrder({"destino","data","status","categoria","links"})
+public class Despesa extends RepresentationModel<Despesa>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
