@@ -59,8 +59,8 @@ public class DespesaController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(path = "/find", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> find(@RequestParam(name = "id", required = false) Long id, @RequestParam(name = "destino",required = false) String destino, @RequestParam(name = "data", required = false) Date data, @RequestParam(name = "despesaStatus",required = false)DespesaStatus despesaStatus, @RequestParam(name = "despesaCategoria",required = false)DespesaCategoria despesaCategoria, Pageable pageable){
+    @GetMapping(path = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> list(@RequestParam(name = "id", required = false) Long id, @RequestParam(name = "destino",required = false) String destino, @RequestParam(name = "data", required = false) Date data, @RequestParam(name = "despesaStatus",required = false)DespesaStatus despesaStatus, @RequestParam(name = "despesaCategoria",required = false)DespesaCategoria despesaCategoria, Pageable pageable){
         Page pageResult = this.despesaService.find(id, destino, data, despesaStatus, despesaCategoria, pageable);
         List<Despesa> listResult = pageResult.getContent();
         for(Despesa element: listResult){
