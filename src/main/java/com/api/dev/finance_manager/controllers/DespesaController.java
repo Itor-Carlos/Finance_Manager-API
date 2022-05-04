@@ -34,12 +34,6 @@ public class DespesaController {
     @Autowired
     private DespesaService despesaService;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Despesa>> listar(){
-        List<Despesa> listaDespesas = this.despesaService.listar();
-        return ResponseEntity.ok(listaDespesas);
-    }
-
     @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> buscarForId(@PathVariable("id") Long id){
         Despesa despesaBuscada = this.despesaService.buscarForId(id);

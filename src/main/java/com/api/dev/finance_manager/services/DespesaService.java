@@ -21,10 +21,6 @@ public class DespesaService {
     @Autowired
     private DespesaRepository despesaRepository;
 
-    public List<Despesa> listar(){
-        return this.despesaRepository.findAll();
-    }
-
     public Despesa buscarForId(Long id) {
         if(id < 1){
             throw new IllegalArgumentException("the id most be higher or equals 1");
