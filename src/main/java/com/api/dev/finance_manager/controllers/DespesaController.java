@@ -86,6 +86,12 @@ public class DespesaController {
         return ResponseEntity.created(despesaSalvaLocation).body(despesaSalva);
     }
 
+    @Operation(summary = "Update a existent despesa")//describes the operation
+    @ApiResponses(value = {//this annotation maps the status code, the description, the media type, and schema used. This information is provided in Swagger Ui, in the specific method
+        @ApiResponse(responseCode = "200", description = "Updated despesa", content = { @Content(mediaType = "application/json") }),
+
+        @ApiResponse(responseCode = "404", description = "Not found the despesa. Operation cannot be completed", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DespesaNotFoundExceptionDetails.class)) }),        
+    })
     @PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> alterar(@PathVariable("id") Long id, @RequestBody DespesaDTO despesaDTO){
         this.despesaService.alterar(despesaDTO.toDespesa(),id);
