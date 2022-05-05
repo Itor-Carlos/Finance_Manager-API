@@ -98,6 +98,10 @@ public class DespesaController {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "List all despesas")//describes the operation
+    @ApiResponses(value = {//this annotation maps the status code, the description, the media type, and schema used. This information is provided in Swagger Ui, in the specific method || This operation returns a Page with (or not, the list can be empty) Despesa in your body
+        @ApiResponse(responseCode = "200", description = "Get All Despesas in database", content = { @Content(mediaType = "application/json",schema = @Schema(implementation = Page.class)) }),       
+    })
     @GetMapping(path = "/list", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> list(@RequestParam(name = "id", required = false) Long id, @RequestParam(name = "destino",required = false) String destino, @RequestParam(name = "data", required = false) Date data, @RequestParam(name = "despesaStatus",required = false)DespesaStatus despesaStatus, @RequestParam(name = "despesaCategoria",required = false)DespesaCategoria despesaCategoria, Pageable pageable){
         Page pageResult = this.despesaService.find(id, destino, data, despesaStatus, despesaCategoria, pageable);
