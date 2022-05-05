@@ -8,6 +8,8 @@ import com.api.dev.finance_manager.dto.DespesaDTO;
 import com.api.dev.finance_manager.enums.DespesaCategoria;
 import com.api.dev.finance_manager.enums.DespesaStatus;
 import com.api.dev.finance_manager.exceptions.DespesaNotFoundException;
+import com.api.dev.finance_manager.exceptions.DespesaNotFoundExceptionDetails;
+import com.api.dev.finance_manager.exceptions.IllegalArgumentExceptionDetails;
 import com.api.dev.finance_manager.model.Despesa;
 import com.api.dev.finance_manager.services.DespesaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,11 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -34,6 +41,16 @@ public class DespesaController {
     @Autowired
     private DespesaService despesaService;
 
+    @Operation(summary = "Search a specificy despesa using id as parameter")//Descrevi the operation
+    @ApiResponses(value = {//this annotation maps the status code, the description, the media type, and schema used. This information is provided in Swagger Ui, in the specific method
+        
+        @ApiResponse(responseCode = "200", description = "Found the despesa", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DespesaDTO.class)) }),
+
+        @ApiResponse(responseCode = "404", description = "Not Found the despesa", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DespesaNotFoundExceptionDetails.class)) }),
+
+        @ApiResponse(responseCode = "400", description = "Id passed its not valid", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = IllegalArgumentExceptionDetails.class)) }),
+
+    })
     @GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> buscarForId(@PathVariable("id") Long id){
         Despesa despesaBuscada = this.despesaService.buscarForId(id);
