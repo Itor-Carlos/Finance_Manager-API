@@ -7,6 +7,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import com.api.dev.finance_manager.dto.DespesaDTO;
 import com.api.dev.finance_manager.enums.DespesaCategoria;
 import com.api.dev.finance_manager.enums.DespesaStatus;
+import com.api.dev.finance_manager.exceptions.DespesaFieldNotValidExceptionDetails;
 import com.api.dev.finance_manager.exceptions.DespesaNotFoundException;
 import com.api.dev.finance_manager.exceptions.DespesaNotFoundExceptionDetails;
 import com.api.dev.finance_manager.exceptions.IllegalArgumentExceptionDetails;
@@ -71,7 +72,13 @@ public class DespesaController {
         this.despesaService.deletarById(id);
         return ResponseEntity.noContent().build();
     }
+    
+    @Operation(summary = "Create despesa in the database")//describes the operation
+    @ApiResponses(value = {//this annotation maps the status code, the description, the media type, and schema used. This information is provided in Swagger Ui, in the specific method
+        @ApiResponse(responseCode = "201", description = "Created despesa", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DespesaDTO.class)) }),
 
+        @ApiResponse(responseCode = "400", description = "Despesa Field Not Valid. Operation cannot be completed", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DespesaFieldNotValidExceptionDetails.class)) }),        
+    })
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> salvar(@RequestBody @Valid DespesaDTO despesaDTO){
         Despesa despesaSalva = this.despesaService.salvar(despesaDTO.toDespesa());
