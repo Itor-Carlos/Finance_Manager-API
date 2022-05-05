@@ -43,7 +43,7 @@ public class DespesaController {
 
     @Operation(summary = "Search a specificy despesa using id as parameter")//Descrevi the operation
     @ApiResponses(value = {//this annotation maps the status code, the description, the media type, and schema used. This information is provided in Swagger Ui, in the specific method
-        
+
         @ApiResponse(responseCode = "200", description = "Found the despesa", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DespesaDTO.class)) }),
 
         @ApiResponse(responseCode = "404", description = "Not Found the despesa", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DespesaNotFoundExceptionDetails.class)) }),
@@ -57,6 +57,15 @@ public class DespesaController {
         return ResponseEntity.ok(despesaBuscada);
     }
 
+    @Operation(summary = "Delete a specifiy despesa using id as parameter")//describes the operation
+    @ApiResponses(value = {//this annotation maps the status code, the description, the media type, and schema used. This information is provided in Swagger Ui, in the specific method
+        @ApiResponse(responseCode = "204", description = "Deleted despesa", content = { @Content(mediaType = "application/json") }),
+
+        @ApiResponse(responseCode = "400", description = "Id passed its not valid", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = IllegalArgumentExceptionDetails.class)) }),
+
+        @ApiResponse(responseCode = "404", description = "Not found the despesa. Operation cannot be completed", content = { @Content(mediaType = "application/json", schema = @Schema(implementation = DespesaNotFoundExceptionDetails.class)) }),
+        
+    })
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> deleteForId(@PathVariable("id") Long id){
         this.despesaService.deletarById(id);
