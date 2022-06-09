@@ -1,6 +1,17 @@
 # Finance_Manager-API
 API REST for the Finance Manager application
 
+## Technologies
+ 
+- Java
+- Spring Boot
+- MySQL
+- JPA
+- OpenSwagger
+- H2
+- JUnit
+
+
 ## Features
 
 - Save a Despesa
