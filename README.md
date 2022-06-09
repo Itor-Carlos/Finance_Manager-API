@@ -36,3 +36,8 @@ API REST for the Finance Manager application
 ```bash
 git clone https://github.com/Itor-Carlos/Finance_Manager-API.git
 ```
+
+**2. Create MySQL database**
+```bash
+create database finance_manager
+```
