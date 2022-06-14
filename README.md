@@ -31,8 +31,6 @@ API REST for the Finance Manager application
 
 ## Steps to Setup
 
-## Steps to Setup
-
 **1. Clone the application**
 
 ```bash
