@@ -67,7 +67,6 @@ mvn spring-boot:run
 
 
 ## This API will be modified in the future
-  + profiles(test,dev)
-  + CORS configuration
+
   + Unit Tests and Integration Tests
   + Docker
