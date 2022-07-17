@@ -1,5 +1,5 @@
 # Finance_Manager-API
-API REST for the Finance Manager application
+API REST for the Finance Manager application (not complet yet)
 
 ## Project link on heroku: https://finance-manager-spring-api.herokuapp.com
 
