@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@RestControllerAdvice
+@RestControllerAdvice(basePackages = "com.api.dev.finance_manager.controllers")
 public class RestExceptionHandler {
 
     @ExceptionHandler(DespesaNotFoundException.class)
