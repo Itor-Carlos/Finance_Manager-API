@@ -23,7 +23,7 @@ API REST for the Finance Manager application (not complet yet)
 - Get a specific Despesa
 - Uptade a specific Despesa
 - Delete a specific Despesa
-- Search Despesas
+- Filter Despesas
 
 ## Requirements
 
