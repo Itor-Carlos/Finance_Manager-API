@@ -12,8 +12,7 @@ API REST for the Finance Manager application (not complet yet)
 - JPA
 - OpenSwagger
 - H2
-- JUnit
-- Hibernate
+
 
 
 ## Features
